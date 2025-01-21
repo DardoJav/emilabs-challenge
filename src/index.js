@@ -41,7 +41,7 @@ const PORT = process.env.PORT || 3000;
     await connectToDatabase();
 
     console.log('syncronizing models...');
-    sequelize.sync({ force: true }).then(async () => {
+    sequelize.sync({ alter: true }).then(async () => {
       const queryInterface = sequelize.getQueryInterface();
 
       if (!queryInterface) {

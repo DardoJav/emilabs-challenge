@@ -5,7 +5,7 @@ info:
   description: API to manage listings, associated steps and related entities.
 
 servers:
-  - url: http://localhost:3000
+  - url: https://emilabs-challenge-production.up.railway.app/
     description: Local development server
 
 paths:

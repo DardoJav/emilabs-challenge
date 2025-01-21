@@ -1,0 +1,154 @@
+openapi: 3.0.3
+info:
+  title: Listing API
+  version: 1.0.0
+  description: API to manage listings, associated steps and related entities.
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /api/listings/{listingId}:
+    put:
+      summary: Update a listing and its associated steps.
+      parameters:
+        - name: listingId
+          in: path
+          required: true
+          description: ID of the listing to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListingUpdate'
+      responses:
+        200:
+          description: Listing updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListingResponse'
+        400:
+          description: Invalid request.
+        404:
+          description: Listing not found.
+
+  /api/listings/{listingId}/steps/upload:
+    post:
+      summary: Load steps from a CSV file.
+      parameters:
+        - name: listingId
+          in: path
+          required: true
+          description: ID of the listing to which the steps will be associated.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                csvFile:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: Steps loaded successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: "Steps uploaded successfully"
+        400:
+          description: CSV File is required.
+        500:
+          description: Server error loading steps.
+
+components:
+  schemas:
+    ListingUpdate:
+      type: object
+      properties:
+        company_name:
+          type: string
+        company_logo:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        criteria:
+          type: string
+        info:
+          type: string
+        state:
+          type: string
+        gs:
+          type: string
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/Step'
+      example:
+        company_name: "XYZ Company"
+        company_logo: "https://example.com/logo.png"
+        name: "New Listing"
+        description: "Listing Description"
+        criteria: "Specific criteria"
+        info: "Additional information"
+        state: "Active"
+        gs: "GS-001"
+        steps:
+          - id: 1
+            flowId: 1001
+            name: "First step"
+            step: { "action": "start" }
+            listingFlow: { "type": "default" }
+    Step:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Step ID (to update existing steps).
+        flowId:
+          type: integer
+        name:
+          type: string
+        step:
+          type: object
+        listingFlow:
+          type: object
+      example:
+        id: 1
+        flowId: 1001
+        name: "First step"
+        step: { "action": "start" }
+        listingFlow: { "type": "default" }
+
+    ListingResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        company_name:
+          type: string
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/Step'
+      example:
+        id: 1
+        company_name: "XYZ Company"
+        steps:
+          - id: 1
+            flowId: 1001
+            name: "First step"
+            step: { "action": "start" }
+            listingFlow: { "type": "default" }

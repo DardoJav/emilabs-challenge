@@ -12,7 +12,7 @@ export async function up(queryInterface, Sequelize) {
    * }], {});
   */
   // Country
-  await queryInterface.bulkInsert('countries', [{
+  await queryInterface.bulkInsert('Countries', [{
     name: 'Argentina',
     code: 'AR',
     createdAt: new Date(),
@@ -30,7 +30,7 @@ export async function up(queryInterface, Sequelize) {
   }]);
 
   // Company
-  await queryInterface.bulkInsert('companies', [{
+  await queryInterface.bulkInsert('Companies', [{
     name: 'Company A',
     createdAt: new Date(),
     updatedAt: new Date()
@@ -45,7 +45,7 @@ export async function up(queryInterface, Sequelize) {
   }]);
 
   // Subsidiary
-  await queryInterface.bulkInsert('subsidiaries', [{
+  await queryInterface.bulkInsert('Subsidiaries', [{
     name: 'Subsidiary A',
     logo: 'https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg',
     country_id: 1,
@@ -62,7 +62,7 @@ export async function up(queryInterface, Sequelize) {
   }]);
 
   // Listing
-  await queryInterface.bulkInsert('listings', [{
+  await queryInterface.bulkInsert('Listings', [{
     company_name: 'Company A',
     company_logo: 'https://www.shutterstock.com/image-vector/sample-red-square-grunge-stamp-260nw-338250266.jpg',
     name: 'Listing A',
@@ -119,7 +119,7 @@ export async function up(queryInterface, Sequelize) {
   }]);
 
   // Steps
-  await queryInterface.bulkInsert('steps', [
+  await queryInterface.bulkInsert('Steps', [
     {
       listingId: 1,
       flowId: 1,
@@ -165,10 +165,10 @@ export async function down(queryInterface, Sequelize) {
    * Example:
    * await queryInterface.bulkDelete('People', null, {});
    */
-  await queryInterface.bulkDelete('companies', null, {});
-  await queryInterface.bulkDelete('countries', null, {});
-  await queryInterface.bulkDelete('subsidiaries', null, {});
-  await queryInterface.bulkDelete('listings', null, {});
+  await queryInterface.bulkDelete('Companies', null, {});
+  await queryInterface.bulkDelete('Countries', null, {});
+  await queryInterface.bulkDelete('Subsidiaries', null, {});
+  await queryInterface.bulkDelete('Listings', null, {});
   await queryInterface.bulkDelete('platform_listings', null, {});
-  await queryInterface.bulkDelete('steps', null, {});
+  await queryInterface.bulkDelete('Steps', null, {});
 }
